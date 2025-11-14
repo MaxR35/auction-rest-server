@@ -30,7 +30,7 @@ public class BidDaoSql implements IBidDao {
     public List<Bid> findBids(String itemSlug) {
         String query = """
                 SELECT b.bid_id, b.amount, b.time, b.slug,
-                       u.user_id, u.firstname, u.lastname, u.image, u.create_at
+                       u.user_id, u.username, u.slug as user_slug, u.firstname, u.lastname, u.image, u.create_at
                 FROM BIDS b
                 LEFT OUTER JOIN USERS u ON b.user_id = u.user_id
                 WHERE b.slug = :slug
@@ -90,6 +90,8 @@ public class BidDaoSql implements IBidDao {
         public Bid mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setId(rs.getString("user_id"));
+            user.setUsername(rs.getString("username"));
+            user.setSlug(rs.getString("user_slug"));
             user.setFirstname(rs.getString("firstname"));
             user.setLastname(rs.getString("lastname"));
             user.setImage(rs.getString("image"));

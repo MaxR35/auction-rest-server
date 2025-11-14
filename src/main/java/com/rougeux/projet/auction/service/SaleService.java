@@ -49,6 +49,10 @@ public class SaleService {
                 SaleMapper.toDto(sale));
     }
 
+    public Sale getEntityBySlug(String slug) {
+        return saleDao.findById(slug);
+    }
+
     public void save(Sale sale) {
         saleDao.save(sale);
     }
