@@ -1,5 +1,6 @@
 package com.rougeux.projet.auction.service;
 
+import com.rougeux.projet.auction.api.ApiResponseFactory;
 import com.rougeux.projet.auction.dto.request.LoginRequest;
 import com.rougeux.projet.auction.dto.response.LoginResponse;
 import com.rougeux.projet.auction.service.security.CustomUserDetailsService;
@@ -26,6 +27,9 @@ class AuthServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
+    ApiResponseFactory apiResponseFactory;
 
     @Mock
     private LocaleHelper localeHelper;
@@ -62,7 +66,7 @@ class AuthServiceTest {
 
         ApiResponse<LoginResponse> response = authService.login(loginRequest);
 
-        assertEquals("101", response.code());
+        assertEquals("401", response.code());
     }
 
     @Test
@@ -79,6 +83,6 @@ class AuthServiceTest {
 
         ApiResponse<LoginResponse> response = authService.login(loginRequest);
 
-        assertEquals("101", response.code());
+        assertEquals("401", response.code());
     }
 }
