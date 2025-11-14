@@ -1,0 +1,67 @@
+USE AUCTION
+DROP TABLE BIDS;
+DROP TABLE SALES;
+DROP TABLE ITEMS;
+DROP TABLE CATEGORIES;
+DROP TABLE USERS;
+
+CREATE TABLE USERS (
+    [user_id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    username NVARCHAR(100) NOT NULL UNIQUE,
+    [password] NVARCHAR(255) NOT NULL,
+    slug NVARCHAR(150) NOT NULL UNIQUE,
+    firstname NVARCHAR(100),
+    lastname NVARCHAR(100),
+    [image] NVARCHAR(255),
+    phone NVARCHAR(20),
+    credit INT DEFAULT 0,
+    admin BIT DEFAULT 0,
+    enabled BIT DEFAULT 1,
+    create_at DATETIME2 DEFAULT SYSDATETIME()
+);
+
+CREATE TABLE CATEGORIES (
+    category_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    slug NVARCHAR(100) NOT NULL UNIQUE,
+    [label] NVARCHAR(100) NOT NULL
+);
+
+CREATE TABLE ITEMS (
+    item_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    [name] NVARCHAR(150) NOT NULL,
+    [description] NVARCHAR(MAX),
+    [image] NVARCHAR(255),
+    category_id UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT FK_Items_Categories FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+);
+
+CREATE TABLE SALES (
+    sale_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    slug NVARCHAR(150) NOT NULL UNIQUE,
+    create_at DATETIME2 DEFAULT SYSDATETIME(),
+    start_at DATETIME2 NOT NULL,
+    end_at DATETIME2 NOT NULL,
+    starting_price INT NOT NULL,
+    current_price INT NOT NULL,
+    likes INT DEFAULT 0,
+    closed TINYINT DEFAULT 0,
+
+    seller_id UNIQUEIDENTIFIER NOT NULL,
+    item_id UNIQUEIDENTIFIER NOT NULL,
+
+    CONSTRAINT FK_Sales_Users FOREIGN KEY (seller_id) REFERENCES Users([user_id]),
+    CONSTRAINT FK_Sales_Items FOREIGN KEY (item_id) REFERENCES Items(item_id)
+);
+
+CREATE TABLE BIDS (
+    bid_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    amount INT NOT NULL,                  
+    [time] DATETIME2 NOT NULL,            
+    slug NVARCHAR(200) NOT NULL,          
+    [user_id] UNIQUEIDENTIFIER NOT NULL,        
+
+    CONSTRAINT FK_Bids_Users FOREIGN KEY ([user_id]) REFERENCES Users([user_id])
+);
+
+CREATE INDEX IDX_Bids_Slug ON BIDS (slug);
+CREATE UNIQUE INDEX IDX_Sales_Slug ON SALES (slug);
