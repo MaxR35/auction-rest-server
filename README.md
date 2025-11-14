@@ -14,14 +14,6 @@ The API is documented with Swagger UI.
 
 ## Configuration
 
-The project uses a `.env` file (excluded from Git) to store environment variables:
-
-```bash
-pip install foobar
-```
-
-## Usage
-
 ```env
 # Admin account
 ADMIN_USERNAME=your_admin_username_here (email)
