@@ -12,7 +12,14 @@ The API is documented with Swagger UI.
 - Swagger UI integration
 - Unit tests for all core services
 
-## Configuration
+## Installation
+
+```bash
+git clone https://github.com/MaxR35/auction-rest-server.git "Auction Rest Server"
+cd "Auction Rest Server"
+```
+
+Create a `.env` file at the root of the project and fill it with the required environment variables:
 
 ```env
 # Admin account
@@ -31,7 +38,8 @@ MONGO_PORT=mongo_port
 # JWT SECRET
 JWT_SECRET=your_jwt_secret_here_256bit
 ```
-Le `.env` est automatiquement importé via :
+
+The project will automatically load the `.env` file on startup:
 ```properties
 spring.config.import=optional:file:.env[.properties]
 ```
@@ -51,9 +59,11 @@ The API starts on:
 → automatically redirects to Swagger UI:
 
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-## Tech Stack
-Spring Boot
 
+
+## Tech Stack
+
+- Spring Boot
 - Spring Web / Spring Security
 - Spring Data (MongoDB + JPA with SQL Server)
 - JWT auth
