@@ -65,7 +65,7 @@ The API starts on:
 
 - Spring Boot
 - Spring Web / Spring Security
-- Spring Data (MongoDB + JPA with SQL Server)
+- Spring Data (MongoDB / JDBC + SQL Server)
 - JWT auth
 - Swagger / Springdoc OpenAPI
 - JUnit 5 & Mockito
